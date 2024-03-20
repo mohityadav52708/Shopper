@@ -7,6 +7,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useCart } from './ContextReducer';
 import Modal from '../Modal';
 import Cart from '../screens/Cart';
+// import Cateogries  from './Cateogries';
 export default function Navbar(props) {
 
     const [cartView, setCartView] = useState(false)
@@ -21,7 +22,26 @@ export default function Navbar(props) {
     const loadCart = () => {
         setCartView(true)
     }
-
+    const [searchTerm, setSearchTerm] = useState("");
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+    const [cartCount, setCartCount] = useState(0); // State to track number of items in cart
+  
+    const handleSearchChange = (e) => {
+      setSearchTerm(e.target.value);
+    };
+  
+    const handleMinPriceChange = (e) => {
+      setMinPrice(e.target.value);
+    };
+  
+    const handleMaxPriceChange = (e) => {
+      setMaxPrice(e.target.value);
+    };
+  
+    const handleAddToCart = () => {
+      setCartCount((prevCount) => prevCount + 1);
+    };
     const items = useCart();
     return (
         <div>
@@ -42,8 +62,9 @@ export default function Navbar(props) {
                                     <Link className="nav-link fs-5 mx-3 active" aria-current="page" to="/myorder" >My Orders</Link>  {/* index.css - nav-link color white */}
                                 </li> : ""}
                             {(localStorage.getItem("token")) ?
-                                <li className="nav-item">
-                                    <Link className="nav-link fs-5 mx-3 active" aria-current="page" to="/myorder" >Cateogries</Link>  {/* index.css - nav-link color white */}
+                                <li  className="nav-item">
+                                    <Link className="nav-link fs-5 mx-3 active" aria-current="page" to="/Category" >Category</Link>
+                                      {/* index.css - nav-link color white */}
                                 </li> : ""}
                         </ul>
                         {(!localStorage.getItem("token")) ?

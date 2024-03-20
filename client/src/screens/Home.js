@@ -3,11 +3,16 @@ import Card from '../components/Card'
 // import Carousel from '../components/Carousel'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import Category from '../components/Category'
+import ProductCart from '../components/ProductCart'
+import Cart from '../components/Cart';
 // import Category from '../components/Categories'
 export default function Home() {
   const [foodCat, setFoodCat] = useState([])
   const [foodItems, setFoodItems] = useState([])
   const [search, setSearch] = useState('')
+  
+  // const [search, setSearch] = useState('');
   const loadFoodItems = async () => {
     let response = await fetch("http://localhost:5000/api/auth/foodData", {
       // credentials: 'include',
@@ -27,6 +32,25 @@ export default function Home() {
   useEffect(() => {
     loadFoodItems()
   }, [])
+  
+    // Function to handle adding items to the cart
+    const handleAddToCart = (productId) => {
+      // Implement the logic to add the item to the cart
+      // For example, you can update the cart count
+      console.log(`Product with ID ${productId} added to cart`);
+    };
+    const [searchTerm, setSearchTerm] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [cartCount, setCartCount] = useState(0); // State to track number of items in cart
+
+    const handleSearchChange = (e) => {
+      setSearchTerm(e.target.value);
+    };
+    // const filteredProducts = products.filter(
+    //   (product) => product.name.toLowerCase().includes(search.toLowerCase())
+    // );
+    
 
   return (
     <div >
@@ -39,8 +63,9 @@ export default function Home() {
           <div className="carousel-inner " id='carousel'>
             <div class=" carousel-caption  " style={{ zIndex: "9" }}>
               <div className=" d-flex justify-content-center">  {/* justify-content-center, copy this <form> from navbar for search box */}
-                <input className="form-control me-2 w-75 bg-white text-dark" type="search" placeholder="Search in here..." aria-label="Search" value={search} onChange={(e) => { setSearch(e.target.value) }} />
-                <button className="btn text-white bg-danger" onClick={() => { setSearch('') }}>X</button>
+                {/* <input className="form-control me-2 w-75 bg-white text-dark" type="search"  value={searchTerm} */}
+            {/* onChange={handleSearchChange} placeholder="Search in here..." aria-label="Search"/>
+                <button className="btn text-white bg-danger" onClick={() => { setSearch('') }}>X</button> */}
               </div>
             </div>
             <div className="carousel-item active" >
@@ -92,6 +117,8 @@ export default function Home() {
 
       </div>
       {/* <h1>Hello Buddy How you doing ?</h1> */}
+      <Cart/>
+      <ProductCart onAddToCart={handleAddToCart} />
       {/* <Category/> */}
       <Footer />
     </div>
